@@ -1,15 +1,21 @@
 package softwaredesign;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class HelloApplication extends Application {
     @Override
@@ -19,10 +25,14 @@ public class HelloApplication extends Application {
 
         BorderPane root = new BorderPane();
 //        Should be panel since container
-        Label label_center = new Label("this is BorderPane center");
-        label_center.setBackground(Background.fill(Color.LIGHTGRAY));
-        label_center.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        root.setCenter(label_center);
+//        Label label_center = new Label("this is BorderPane center");
+//        label_center.setBackground(Background.fill(Color.LIGHTGRAY));
+//        label_center.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        root.setCenter(label_center);
+
+        GameEnv env = new GameEnv();
+        root.setCenter(env.render());
+
 
         Label label_top = new Label("this is BorderPane top");
         label_top.setBackground(Background.fill(Color.LIGHTBLUE));
@@ -65,4 +75,5 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
