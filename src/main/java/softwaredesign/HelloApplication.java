@@ -1,21 +1,12 @@
 package softwaredesign;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class HelloApplication extends Application {
     @Override
@@ -32,7 +23,6 @@ public class HelloApplication extends Application {
 
         GameEnv env = new GameEnv();
         root.setCenter(env.render());
-
 
         Label label_top = new Label("this is BorderPane top");
         label_top.setBackground(Background.fill(Color.LIGHTBLUE));
