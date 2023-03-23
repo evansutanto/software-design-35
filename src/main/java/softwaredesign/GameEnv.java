@@ -3,34 +3,33 @@ package softwaredesign;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 
 public class GameEnv {
     Pane p;
-    private ImageView currBackground;
-    private boolean isCellBg;
+    private boolean isCellBg = true;
     public void setBackground(){
         Image cellbg = new Image(getClass().getResource("mainbg.jpg").toExternalForm());
         Image backyardbg =  new Image(getClass().getResource("backyardBackground.png").toExternalForm());
 
-        currBackground = new ImageView(cellbg);
-        currBackground.setFitHeight(370);
-        currBackground.setFitWidth(600);
-
+        p = new Pane();
         Button switchButton = new Button("switch");
+        p.getChildren().add(switchButton);
+
+        BackgroundImage cell = new BackgroundImage(cellbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, false));
+        p.setBackground(new Background(cell));
+
         switchButton.setOnAction(event -> {
             if (isCellBg) {
-                currBackground.setImage(backyardbg);
+                BackgroundImage backyard = new BackgroundImage(backyardbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, false));
+                p.setBackground(new Background(backyard));
                 isCellBg = false;
+
             } else {
-                currBackground.setImage(cellbg);
+                p.setBackground(new Background(cell));
                 isCellBg = true;
             }
         });
-
-        p = new Pane();
-        p.getChildren().addAll(currBackground, switchButton);
     }
     public Pane render(){
         return p;
