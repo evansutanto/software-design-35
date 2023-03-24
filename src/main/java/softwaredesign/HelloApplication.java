@@ -6,13 +6,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
+    private ImageView selectedCharacterImageView;
     @Override
     public void start(Stage stage) throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
@@ -24,6 +29,10 @@ public class HelloApplication extends Application {
 //        label_center.setBackground(Background.fill(Color.LIGHTGRAY));
 //        label_center.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 //        root.setCenter(label_center);
+
+//        CustomizationPage selectCharacter = new CustomizationPage();
+//        root.setCenter(selectCharacter.renderOption());
+//        root.setRight(selectCharacter.renderSelectedCharacter());
 
         GameEnv env = new GameEnv();
         root.setCenter(env.render());
