@@ -26,12 +26,14 @@ public class HelloApplication extends Application {
 //        label_center.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 //        root.setCenter(label_center);
 
-//        CustomizationPage selectCharacter = new CustomizationPage();
-//        root.setCenter(selectCharacter.renderOption());
-//        root.setRight(selectCharacter.renderSelectedCharacter());
+        CustomizationPage selectCharacter = new CustomizationPage();
+        root.setCenter(selectCharacter.renderOption());
+//        root.setCenter(selectCharacter.renderSelectButton());
 
-        GameEnv env = new GameEnv();
-        root.setCenter(env.render());
+        root.setRight(selectCharacter.renderSelectedCharacter());
+
+//        GameEnv env = new GameEnv();
+//        root.setCenter(env.render());
 
         Panel panel = new Panel();
 
