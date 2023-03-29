@@ -2,6 +2,7 @@ package softwaredesign;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -55,5 +56,9 @@ public class Panel {
         bottom.setSpacing(40);
         bottom.setAlignment(Pos.CENTER);
         return bottom;
+    }
+    public void setBottom(Node input) {
+        bottom.getChildren().clear();
+        bottom.getChildren().add(input);
     }
 }
