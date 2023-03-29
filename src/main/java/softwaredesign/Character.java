@@ -68,5 +68,6 @@ public abstract class Character {
 * modify in UML
 * wakeup() should be sleep()
 * for buff prisoner eatBig() will be flex()
+* add check() to Character class
 *
 * */

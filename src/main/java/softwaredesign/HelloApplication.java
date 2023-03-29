@@ -75,6 +75,9 @@ public class HelloApplication extends Application {
         stage.setHeight(600);
         stage.setScene(scene);
         stage.show();
+
+
+
     }
 
     public static void main(String[] args) {
