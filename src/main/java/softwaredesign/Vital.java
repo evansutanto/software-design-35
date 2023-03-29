@@ -1,32 +1,33 @@
 package softwaredesign;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.TilePane;
+ public abstract class Vital {
+     int value;
+     String text;
+}
 
-public class Vital {
+class Health extends Vital{
+     String text = "HP";
+     public boolean isAlive(){
+         if (value > 0){
+             return true;
+         }
+         return false;
+     }
+}
+class Hunger extends Vital{
+     String text = "Hunger";
+     public int criticalness = 4;
+}
+class Mood extends Vital{
+     String text = "Mood";
+     public int criticalness = 1;
 
-    TilePane r = new TilePane();
-    Button b = new Button("increase");
-    ProgressBar pb = new ProgressBar();
-    double ii;
-    public Vital() {
-        ii = 0;
-        // action event
-        EventHandler<ActionEvent> event = e -> {
-            // set progress to different level of progressbar
-            ii += 0.1;
-            pb.setProgress(ii);
-        };
-        // creating button
-        // set on action
-        b.setOnAction(event);
-    }
-    public ProgressBar render() {
-        r.getChildren().add(pb);
-        r.getChildren().add(b);
-        return pb;
-    }
+}
+class Hygiene extends Vital{
+     String text = "Hygiene";
+     public int criticalness = 2;
+}
+class Sleepiness extends Vital{
+     String text = "Sleepiness";
+    public int criticalness = 3;
 }

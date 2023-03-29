@@ -30,7 +30,7 @@ public class HelloApplication extends Application {
         root.setCenter(selectCharacter.renderOption());
 //        root.setCenter(selectCharacter.renderSelectButton());
 
-        root.setRight(selectCharacter.renderSelectedCharacter());
+//        root.setRight(selectCharacter.renderSelectedCharacter());
 
 //        GameEnv env = new GameEnv();
 //        root.setCenter(env.render());

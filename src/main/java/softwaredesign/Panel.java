@@ -29,10 +29,10 @@ public class Panel {
         sidebarRight.getChildren().add(buttons.get(2));
         sidebarRight.getChildren().add(buttons.get(3));
 
-        Vital hunger = new Vital();
-        Vital sleepiness = new Vital();
-        Vital hygiene = new Vital();
-        Vital mood = new Vital();
+        Tracker hunger = new Tracker();
+        Tracker sleepiness = new Tracker();
+        Tracker hygiene = new Tracker();
+        Tracker mood = new Tracker();
 
         bottom.getChildren().add(hunger.render());
         bottom.getChildren().add(sleepiness.render());
