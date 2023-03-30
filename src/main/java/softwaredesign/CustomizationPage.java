@@ -6,16 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import static java.lang.System.exit;
+import javafx.scene.layout.*;
 
 public class CustomizationPage {
+    Pane p;
     private ImageView selectedCharacterImageView;
     private VBox characterOptionsContainer;
-
     public static String selectedCharacter;
 
     public Button createButton(String name, String file){
@@ -50,14 +46,11 @@ public class CustomizationPage {
         selectedCharacterHBox.setAlignment(Pos.CENTER);
 
         // Create a vbox to hold the character selection and selected character image nodes
-        VBox vbox = new VBox(20, characterSelectionHBox, selectedCharacterHBox);
-        vbox.setAlignment(Pos.CENTER);
-
-        characterOptionsContainer = new VBox(vbox);
+        characterOptionsContainer = new VBox(characterSelectionHBox, selectedCharacterHBox);
         characterOptionsContainer.setAlignment(Pos.CENTER);
-        characterOptionsContainer.setSpacing(20);
+        Image yardbg =  new Image(getClass().getResource("Yard.jpeg").toExternalForm());
+        BackgroundImage yard = new BackgroundImage(yardbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
+        characterOptionsContainer.setBackground(new Background(yard));
     }
-
     public VBox renderOption(){return characterOptionsContainer;}
-
 }
