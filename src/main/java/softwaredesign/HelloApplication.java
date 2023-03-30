@@ -186,8 +186,7 @@ public class HelloApplication extends Application {
         root.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, null, null)));
     }
     private void startGame() {
-        GameEnv env = new GameEnv();
-        root.setCenter(env.render());
+
 
         Panel panel = new Panel();
         root.setBottom(panel.getBottom());
