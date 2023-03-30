@@ -14,9 +14,14 @@ import java.util.List;
 
 public class Panel {
     public List<myButton> buttons;
+    public Tracker hungerTracker = new Tracker();
+    public Tracker sleepTracker = new Tracker();
+    public Tracker moodTracker = new Tracker();
+    public Tracker hygienTracker = new Tracker();
+    public Tracker healthTracker = new Tracker();
     private final VBox sidebarLeft;
     private final VBox sidebarRight;
-    private final VBox bottom;
+    private final HBox bottom;
     public Panel() {
         sidebarLeft = new VBox(50);
         sidebarRight = new VBox(50);
@@ -29,10 +34,12 @@ public class Panel {
         sidebarRight.setPadding(new Insets(10, 50, 50, 50));
         sidebarRight.setAlignment(Pos.CENTER);
 
+        bottom = new HBox();
+        bottom.getChildren().addAll(hungerTracker.render(), hygienTracker.render(), sleepTracker.render(), moodTracker.render(),healthTracker.render());
+
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        bottom = new VBox();
 //        buttons = List.of(new Button("A"), new Button("B"), new Button("C"), new Button("D"));
         // TODO: Not sure if should be made into variables
         buttons = List.of(new myButton("A"), new myButton("B"), new myButton("C"), new myButton("D"));
@@ -61,7 +68,7 @@ public class Panel {
 //        sidebarLeft.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         return sidebarLeft;
     }
-    public VBox getBottom() {
+    public HBox getBottom() {
         bottom.setPrefHeight(180);
         bottom.setBackground(Background.fill(Color.LIGHTGRAY));
         bottom.setSpacing(40);

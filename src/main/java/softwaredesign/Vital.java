@@ -1,5 +1,8 @@
 package softwaredesign;
 
+import javafx.application.Application;
+import javafx.beans.Observable;
+
 import java.util.ArrayList;
 
 public abstract class Vital implements Subject {
@@ -10,16 +13,17 @@ public abstract class Vital implements Subject {
      public void attach(Observer obs) {
         myTracker = obs;
      }
-
      @Override
      public void detach(Observer obs) {
         myTracker = null;
      }
-
      @Override
      public void notifyObservers() {
         if(myTracker != null){
             myTracker.update(value);
+        }
+        else{
+            System.out.println("NO OBSERVER");
         }
      }
 }

@@ -3,7 +3,7 @@ package softwaredesign;
 import javafx.scene.image.Image;
 
 public class BuffPrisoner extends Character {
-    Image charImage = new Image(getClass().getResource("Buff.png").toExternalForm());
+    Image buffImage = new Image(getClass().getResource("Buff.png").toExternalForm());
     Image specialImage = new Image(getClass().getResource("Buff.png").toExternalForm()); // should make a flexing image
 
     public void flex(){
@@ -11,6 +11,7 @@ public class BuffPrisoner extends Character {
         System.out.println("ARGGHHHH am big");
     }
     public  BuffPrisoner(){
+        charImage = buffImage;
         name = "Buff";
         hungerVital = new Hunger();
         sleepVital = new Sleepiness();

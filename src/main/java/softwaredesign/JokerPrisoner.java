@@ -3,14 +3,14 @@ package softwaredesign;
 import javafx.scene.image.Image;
 
 public class JokerPrisoner extends Character {
-    Image charImage = new Image(getClass().getResource("Joker.png").toExternalForm());
-
+    Image jokerImage = new Image(getClass().getResource("Joker.png").toExternalForm());
 
     public void laugh(){
         // add sound here
         System.out.println("HAHAHAHAHA");
     }
     public JokerPrisoner(){
+        charImage = jokerImage;
         name = "Joker";
         hungerVital = new Hunger();
         sleepVital = new Sleepiness();

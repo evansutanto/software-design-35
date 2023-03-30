@@ -11,7 +11,7 @@ import java.util.Observable;
 
 public class Tracker implements Observer {
     String text;
-    int value;
+    double value;
     TilePane r = new TilePane();
     Button b = new Button("increase");
     ProgressBar pb = new ProgressBar();
@@ -22,7 +22,7 @@ public class Tracker implements Observer {
         EventHandler<ActionEvent> event = e -> {
             // set progress to different level of progressbar
             ii += 0.1;
-            pb.setProgress(ii);
+            pb.setProgress(value);
         };
         // creating button
         // set on action
@@ -40,6 +40,8 @@ public class Tracker implements Observer {
 
     @Override
     public void update(int value) {
-        this.value = value;
+        this.value = ((double)value) / 100;
+        System.out.println("updated(): " + this.value);
+        pb.setProgress(value);
     }
 }
