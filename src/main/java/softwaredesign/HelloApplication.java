@@ -47,6 +47,15 @@ public class HelloApplication extends Application {
             fade2.setFromValue(0.0);
             fade2.setToValue(1.0);
             fade2.play();
+//         Create a fade transition for the BorderPane
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setCycleCount(1);
+        fade.setOnFinished(e -> {
+            FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
+            fade2.setFromValue(0.0);
+            fade2.setToValue(1.0);
+            fade2.play();
             startCustomizePage();
         });
 
@@ -89,9 +98,14 @@ public class HelloApplication extends Application {
 
     public void startCustomizePage() {
         CustomizationPage selectCharacter = new CustomizationPage();
+        Panel panel = new Panel();
+        Button selectButton = new Button("Select");
+        panel.setBottom(selectButton);
+        root.setBottom(panel.getBottom());
+        root.setLeft(panel.getLeft());
+        root.setRight(panel.getRight());
         root.setCenter(selectCharacter.renderOption());
         chosenCharType = selectCharacter.selectedCharacter;
-        Button selectButton = new Button("Select");
         selectButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -104,19 +118,18 @@ public class HelloApplication extends Application {
                     GameEnv env = new GameEnv(myCharacter);
                     root.setCenter(env.render());
 
-                    Panel panel = new Panel();
-                    root.setBottom(panel.getBottom());
-                    root.setLeft(panel.getLeft());
-                    root.setRight(panel.getRight());
+                    Panel gamePanel = new Panel();
+                    root.setBottom(gamePanel.getBottom());
+                    root.setLeft(gamePanel.getLeft());
+                    root.setRight(gamePanel.getRight());
+                    myCharacter.hungerVital.attach(gamePanel.hungerTracker);
+                    myCharacter.hygineVital.attach(gamePanel.hygienTracker);
+                    myCharacter.sleepVital.attach(gamePanel.sleepTracker);
+                    myCharacter.moodVital.attach(gamePanel.moodTracker);
+                    myCharacter.healthVital.attach(gamePanel.healthTracker);
                 }
             }
         });
-
-        Panel panel = new Panel();
-        panel.setBottom(selectButton);
-        root.setBottom(panel.getBottom());
-        root.setLeft(panel.getLeft());
-        root.setRight(panel.getRight());
     }
     public void initCustomPanel() {
     }
