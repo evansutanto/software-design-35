@@ -1,8 +1,27 @@
 package softwaredesign;
 
- public abstract class Vital {
-     int value;
+import java.util.ArrayList;
+
+public abstract class Vital implements Subject {
+     private Observer myTracker = null;
+     public int value = 100;
      String text;
+     @Override
+     public void attach(Observer obs) {
+        myTracker = obs;
+     }
+
+     @Override
+     public void detach(Observer obs) {
+        myTracker = null;
+     }
+
+     @Override
+     public void notifyObservers() {
+        if(myTracker != null){
+            myTracker.update(value);
+        }
+     }
 }
 
 class Health extends Vital{
@@ -16,11 +35,15 @@ class Health extends Vital{
 }
 class Hunger extends Vital{
      String text = "Hunger";
-     public int criticalness = 4;
+     public int criticalness = 5;
+     Hunger(){
+         value = 100;
+     }
+
 }
 class Mood extends Vital{
      String text = "Mood";
-     public int criticalness = 1;
+     public int criticalness = 3;
 
 }
 class Hygiene extends Vital{
@@ -29,5 +52,5 @@ class Hygiene extends Vital{
 }
 class Sleepiness extends Vital{
      String text = "Sleepiness";
-    public int criticalness = 3;
+    public int criticalness = 4;
 }

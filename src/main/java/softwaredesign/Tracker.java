@@ -6,8 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.TilePane;
 
-public class Tracker {
+import javax.security.auth.Subject;
+import java.util.Observable;
 
+public class Tracker implements Observer {
+    String text;
+    int value;
     TilePane r = new TilePane();
     Button b = new Button("increase");
     ProgressBar pb = new ProgressBar();
@@ -28,5 +32,14 @@ public class Tracker {
         r.getChildren().add(pb);
         r.getChildren().add(b);
         return pb;
+    }
+
+    public Tracker(Subject subject) {
+
+    }
+
+    @Override
+    public void update(int value) {
+        this.value = value;
     }
 }

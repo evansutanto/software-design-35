@@ -16,11 +16,14 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class HelloApplication extends Application {
     BorderPane root = new BorderPane();
-    String chosenChar;
+    String chosenCharType;
+    Character myCharacter;
     @Override
     public void start(Stage stage) throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
@@ -55,12 +58,41 @@ public class HelloApplication extends Application {
         stage.setHeight(600);
         stage.setScene(scene);
         stage.show();
+
+
+
+//        CharacterFactory charFactory = new CharacterFactory();
+//        myCharacter = charFactory.createCharacter(chosenCharType);
+
+        Timer timer = new Timer();
+        TimerTask task1 = new TimerTask() {
+            @Override
+            public void run() {
+                  if(myCharacter != null) {
+                      myCharacter.updateHP();
+                      if(!myCharacter.isAlive){
+                          System.out.println("YOUR PRISONER DIED\nGAMVE OVER");
+                          timer.cancel();
+                      }
+                  }
+            }
+        };
+        TimerTask task2 = new TimerTask() {
+            @Override
+            public void run() {
+                if(myCharacter != null) {
+                    myCharacter.updateVitals();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task1, 5000, 5000);
+        timer.scheduleAtFixedRate(task2, 5000, 1000);
     }
 
     public void startCustomizePage() {
         CustomizationPage selectCharacter = new CustomizationPage();
         root.setCenter(selectCharacter.renderOption());
-        chosenChar = selectCharacter.selectedCharacter;
+        chosenCharType = selectCharacter.selectedCharacter;
         Button selectButton = new Button("Select");
         selectButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -68,7 +100,11 @@ public class HelloApplication extends Application {
                 System.out.println("Selected character: " + selectCharacter.selectedCharacter);
 
                 if (selectCharacter.selectedCharacter != null) {
-                    startGame();
+                    GameEnv env = new GameEnv();
+                    root.setCenter(env.render());
+                    chosenCharType = selectCharacter.selectedCharacter;
+                    CharacterFactory charFactory = new CharacterFactory();
+                    myCharacter = charFactory.createCharacter(chosenCharType);
                 }
             }
         });
@@ -80,7 +116,6 @@ public class HelloApplication extends Application {
         root.setRight(panel.getRight());
     }
     public void initCustomPanel() {
-
     }
     public Label authorIdentity(String name){
         Label nameLabel = new Label(name);
