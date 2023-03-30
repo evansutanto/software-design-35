@@ -1,5 +1,6 @@
 package softwaredesign;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -12,7 +13,7 @@ import javafx.scene.shape.Circle;
 import java.util.List;
 
 public class Panel {
-    public List<Circle> buttons;
+    public List<myButton> buttons;
     private final VBox sidebarLeft;
     private final VBox sidebarRight;
     private final VBox bottom;
@@ -33,20 +34,9 @@ public class Panel {
 
         bottom = new VBox();
 //        buttons = List.of(new Button("A"), new Button("B"), new Button("C"), new Button("D"));
+        // TODO: Not sure if should be made into variables
+        buttons = List.of(new myButton("A"), new myButton("B"), new myButton("C"), new myButton("D"));
 
-        Circle circle = new Circle(30, Color.WHITESMOKE);
-        circle.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {System.out.println("Circle is clicked");});
-
-        Circle circle1 = new Circle(30, Color.WHITESMOKE);
-        circle1.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {System.out.println("Circle is clicked");});
-
-        Circle circle2 = new Circle(30, Color.WHITESMOKE);
-        circle2.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {System.out.println("Circle is clicked");});
-
-        Circle circle3 = new Circle(30, Color.WHITESMOKE);
-        circle3.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {System.out.println("Circle is clicked");});
-
-        buttons = List.of(circle, circle1,circle2,circle3);
 //        Button circularBtn = new Button("Click me");
 //        circularBtn.setPrefSize(75,75);
 //        circularBtn.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
@@ -55,20 +45,20 @@ public class Panel {
 //        circularBtn.setOnAction(e -> {
 //            System.out.println("Button is clicked");
 //        });
-//        myButton btn1 = new myButton();
+//        myButton btn1 = new myButton("Click me");
+//        btn1.setFunction(e -> {System.out.println("TEST");});
 
         sidebarLeft.getChildren().addAll(buttons.get(0), buttons.get(1));
         sidebarRight.getChildren().addAll(buttons.get(2), buttons.get(3));
-
     }
     public VBox getRight() {
         sidebarRight.setBackground(Background.fill(Color.PINK));
-        sidebarRight.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        sidebarRight.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         return sidebarRight;
     }
     public VBox getLeft() {
         sidebarLeft.setBackground(Background.fill(Color.LIGHTGREEN));
-        sidebarLeft.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        sidebarLeft.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         return sidebarLeft;
     }
     public VBox getBottom() {
@@ -81,6 +71,9 @@ public class Panel {
     public void setBottom(Node input) {
         bottom.getChildren().clear();
         bottom.getChildren().add(input);
+    }
+    public void setButton(int index, EventHandler<MouseEvent> event) {
+        buttons.get(index).setFunction(event);
     }
     public void setTracker() {
         Tracker hunger = new Tracker();

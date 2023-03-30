@@ -51,6 +51,7 @@ public class HelloApplication extends Application {
 //        });
 
 //        gameOverState();
+//        CharacterFactory charFactory = new CharacterFactory();
 
         Scene scene = new Scene(root);
         stage.setTitle("Jailbird!");
@@ -59,9 +60,6 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-
-
-//        CharacterFactory charFactory = new CharacterFactory();
 //        myCharacter = charFactory.createCharacter(chosenCharType);
 
         Timer timer = new Timer();
@@ -117,14 +115,14 @@ public class HelloApplication extends Application {
     }
     public void initCustomPanel() {
     }
-    public Label authorIdentity(String name){
+    private Label authorIdentity(String name){
         Label nameLabel = new Label(name);
         nameLabel.setTextFill(Color.WHITE);
         Font font = new Font("Comic Sans MS", 14);
         nameLabel.setFont(font);
         return nameLabel;
     }
-    public void titleState() {
+    private void titleState() {
         ImageView titleImageView = new ImageView(new Image(getClass().getResource("JailBirdTitle.png").toExternalForm()));
         titleImageView.setFitWidth(600);
         titleImageView.setFitHeight(300);
@@ -149,7 +147,7 @@ public class HelloApplication extends Application {
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
     }
 
-    public void gameOverState(){
+    private void gameOverState(){
         ImageView gameOverImage = new ImageView(new Image(getClass().getResource("gameOver.png").toExternalForm()));
         gameOverImage.setFitWidth(400);
         gameOverImage.setFitHeight(300);
@@ -177,7 +175,7 @@ public class HelloApplication extends Application {
         root.setCenter(gameOverContainer);
         root.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, null, null)));
     }
-    public void startGame() {
+    private void startGame() {
         GameEnv env = new GameEnv();
         root.setCenter(env.render());
 
