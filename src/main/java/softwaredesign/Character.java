@@ -66,6 +66,7 @@ public abstract class Character {
         if(healthVital.value <= 0){
             isAlive = false;
         }
+        healthVital.notifyObservers();
         System.out.println("Vitals Updated:");
         System.out.println("Hunger = " + hungerVital.value);
         System.out.println("Sleep = " + sleepVital.value);
@@ -101,7 +102,13 @@ public abstract class Character {
             if(moodVital.value < 0 ) moodVital.value = 0;
         }
         else  sad = false;
+
+        hungerVital.notifyObservers();
+        hygineVital.notifyObservers();
+        sleepVital.notifyObservers();
+        moodVital.notifyObservers();
     }
+
 }
 
 /* NOTES
