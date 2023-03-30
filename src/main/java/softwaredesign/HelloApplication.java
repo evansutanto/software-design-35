@@ -35,20 +35,20 @@ public class HelloApplication extends Application {
         FadeTransition fade = new FadeTransition(Duration.seconds(1), root);
 
         // Create a delay transition for the titleState
-//        delay.setOnFinished(e -> fade.play());
-//        delay.play();
+        delay.setOnFinished(e -> fade.play());
+        delay.play();
 
-        // Create a fade transition for the BorderPane
-//        fade.setFromValue(1.0);
-//        fade.setToValue(0.0);
-//        fade.setCycleCount(1);
-//        fade.setOnFinished(e -> {
-//            FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
-//            fade2.setFromValue(0.0);
-//            fade2.setToValue(1.0);
-//            fade2.play();
+        //Create a fade transition for the BorderPane
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setCycleCount(1);
+        fade.setOnFinished(e -> {
+            FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
+            fade2.setFromValue(0.0);
+            fade2.setToValue(1.0);
+            fade2.play();
             startCustomizePage();
-//        });
+        });
 
 //        gameOverState();
 
@@ -58,8 +58,6 @@ public class HelloApplication extends Application {
         stage.setHeight(600);
         stage.setScene(scene);
         stage.show();
-
-
 
 //        CharacterFactory charFactory = new CharacterFactory();
 //        myCharacter = charFactory.createCharacter(chosenCharType);
@@ -100,11 +98,16 @@ public class HelloApplication extends Application {
                 System.out.println("Selected character: " + selectCharacter.selectedCharacter);
 
                 if (selectCharacter.selectedCharacter != null) {
-                    GameEnv env = new GameEnv();
-                    root.setCenter(env.render());
                     chosenCharType = selectCharacter.selectedCharacter;
                     CharacterFactory charFactory = new CharacterFactory();
                     myCharacter = charFactory.createCharacter(chosenCharType);
+                    GameEnv env = new GameEnv(myCharacter);
+                    root.setCenter(env.render());
+
+                    Panel panel = new Panel();
+                    root.setBottom(panel.getBottom());
+                    root.setLeft(panel.getLeft());
+                    root.setRight(panel.getRight());
                 }
             }
         });
@@ -176,15 +179,6 @@ public class HelloApplication extends Application {
 
         root.setCenter(gameOverContainer);
         root.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, null, null)));
-    }
-    public void startGame() {
-        GameEnv env = new GameEnv();
-        root.setCenter(env.render());
-
-        Panel panel = new Panel();
-        root.setBottom(panel.getBottom());
-        root.setLeft(panel.getLeft());
-        root.setRight(panel.getRight());
     }
 
     public void startPanel() {

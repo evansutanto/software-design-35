@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class DancerPrisoner extends Character {
-    Image charImage = new Image(getClass().getResource("Dancer.png").toExternalForm());
+    Image dancerImage = new Image(getClass().getResource("Dancer.png").toExternalForm());
     Image specialImage = new Image(getClass().getResource("Dancer.png").toExternalForm()); // should make a dancing picture
 
     public void dance(){
@@ -15,6 +15,7 @@ public class DancerPrisoner extends Character {
     }
 
     public DancerPrisoner(){
+        charImage = dancerImage;
         name = "Dancer";
         hungerVital = new Hunger();
         sleepVital = new Sleepiness();

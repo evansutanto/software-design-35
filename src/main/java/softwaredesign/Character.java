@@ -4,8 +4,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
 public abstract class Character {
-    String charImage;
     Image specialImage;
+    public Image charImage;
     public String name;
     public Hunger hungerVital;
     public Sleepiness sleepVital;

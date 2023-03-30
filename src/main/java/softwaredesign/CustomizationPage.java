@@ -13,6 +13,7 @@ public class CustomizationPage {
     private ImageView selectedCharacterImageView;
     private VBox characterOptionsContainer;
     public static String selectedCharacter;
+    public Character chosenCharacter;
 
     public Button createButton(String name, String file){
         Image prisoner = new Image(getClass().getResource(file).toExternalForm());
