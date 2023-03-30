@@ -43,20 +43,11 @@ public class HelloApplication extends Application {
         fade.setToValue(0.0);
         fade.setCycleCount(1);
         fade.setOnFinished(e -> {
-            FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
-            fade2.setFromValue(0.0);
-            fade2.setToValue(1.0);
-            fade2.play();
-//         Create a fade transition for the BorderPane
-        fade.setFromValue(1.0);
-        fade.setToValue(0.0);
-        fade.setCycleCount(1);
-        fade.setOnFinished(e -> {
-            FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
-            fade2.setFromValue(0.0);
-            fade2.setToValue(1.0);
-            fade2.play();
-            startCustomizePage();
+                    FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
+                    fade2.setFromValue(0.0);
+                    fade2.setToValue(1.0);
+                    fade2.play();
+                    startCustomizePage();
         });
 
 //        gameOverState();
