@@ -46,8 +46,7 @@ public class HelloApplication extends Application {
                 System.out.println("Selected character: " + selectCharacter.selectedCharacter);
 
                 if (selectCharacter.selectedCharacter != null) {
-                    GameEnv env = new GameEnv();
-                    root.setCenter(env.render());
+                    startGame();
                 }
             }
         });
@@ -65,6 +64,11 @@ public class HelloApplication extends Application {
     public void startGame() {
         GameEnv env = new GameEnv();
         root.setCenter(env.render());
+
+        Panel panel = new Panel();
+        root.setBottom(panel.getBottom());
+        root.setLeft(panel.getLeft());
+        root.setRight(panel.getRight());
     }
 
     public void startPanel() {

@@ -12,19 +12,19 @@ public class GameEnv {
     Pane p;
     private boolean isCellBg = true;
     public void setBackground(){
-        Image cellbg = new Image(getClass().getResource("mainbg.jpg").toExternalForm());
+        Image cellbg = new Image(getClass().getResource("Cell.jpeg").toExternalForm());
         Image backyardbg =  new Image(getClass().getResource("backyardBackground.png").toExternalForm());
 
         p = new Pane();
         Button switchButton = new Button("switch");
         p.getChildren().add(switchButton);
 
-        BackgroundImage cell = new BackgroundImage(cellbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, false));
+        BackgroundImage cell = new BackgroundImage(cellbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
         p.setBackground(new Background(cell));
 
         switchButton.setOnAction(event -> {
             if (isCellBg) {
-                BackgroundImage backyard = new BackgroundImage(backyardbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, false));
+                BackgroundImage backyard = new BackgroundImage(backyardbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
                 p.setBackground(new Background(backyard));
                 isCellBg = false;
 
