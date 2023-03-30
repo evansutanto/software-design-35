@@ -38,7 +38,6 @@ public class HelloApplication extends Application {
         stage.show();
 
 
-        //making character
 
 //        CharacterFactory charFactory = new CharacterFactory();
 //        myCharacter = charFactory.createCharacter(chosenCharType);
