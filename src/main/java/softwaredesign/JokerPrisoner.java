@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 
 public class JokerPrisoner extends Character {
     Image jokerImage = new Image(getClass().getResource("Joker.png").toExternalForm());
+    Image jokerPushUp = new Image(getClass().getResource("JokerUp.png").toExternalForm());
+    Image jokerPushDown = new Image(getClass().getResource("JokerDown.png").toExternalForm());
 
     public void laugh(){
         // add sound here
@@ -11,6 +13,8 @@ public class JokerPrisoner extends Character {
     }
     public JokerPrisoner(){
         charImage = jokerImage;
+        charPushDown = jokerPushDown;
+        charPushUp = jokerPushUp;
         name = "Joker";
         hungerVital = new Hunger();
         sleepVital = new Sleepiness();
