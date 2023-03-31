@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -22,6 +23,7 @@ public class Panel {
     private final VBox sidebarLeft;
     private final VBox sidebarRight;
     private final HBox bottom;
+    private VBox trackerContainer;
     public Panel() {
         sidebarLeft = new VBox(50);
         sidebarRight = new VBox(50);
@@ -34,8 +36,18 @@ public class Panel {
         sidebarRight.setPadding(new Insets(10, 50, 50, 50));
         sidebarRight.setAlignment(Pos.CENTER);
 
-        bottom = new HBox();
-        bottom.getChildren().addAll(hungerTracker.render(), hygienTracker.render(), sleepTracker.render(), moodTracker.render(),healthTracker.render());
+        VBox hungerVBox = new VBox(5, new Label("Hunger:"), hungerTracker.render());
+        hungerVBox.setAlignment(Pos.CENTER);
+        VBox hygieneVBox = new VBox(5, new Label("Hygiene:"), hygienTracker.render());
+        hygieneVBox.setAlignment(Pos.CENTER);
+        VBox sleepVBox = new VBox(5, new Label("Sleep:"), sleepTracker.render());
+        sleepVBox.setAlignment(Pos.CENTER);
+        VBox moodVBox = new VBox(5, new Label("Mood:"), moodTracker.render());
+        moodVBox.setAlignment(Pos.CENTER);
+        VBox healthVBox = new VBox(5, new Label("Health:"), healthTracker.render());
+        healthVBox.setAlignment(Pos.CENTER);
+
+        bottom = new HBox(5, hungerVBox, hygieneVBox, sleepVBox, moodVBox, healthVBox);
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);

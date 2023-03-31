@@ -2,6 +2,7 @@ package softwaredesign;
 
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -29,17 +30,17 @@ public class Main extends Application {
         titleState();
 
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        FadeTransition fade = new FadeTransition(Duration.seconds(1), root);
+        FadeTransition titlePageFade = new FadeTransition(Duration.seconds(1), root);
 
         // Create a delay transition for the titleState
-        delay.setOnFinished(e -> fade.play());
+        delay.setOnFinished(e -> titlePageFade.play());
         delay.play();
 
-        //Create a fade transition for the BorderPane
-        fade.setFromValue(1.0);
-        fade.setToValue(0.0);
-        fade.setCycleCount(1);
-        fade.setOnFinished(e -> {
+        //Create a titlePageFade transition for the BorderPane
+        titlePageFade.setFromValue(1.0);
+        titlePageFade.setToValue(0.0);
+        titlePageFade.setCycleCount(1);
+        titlePageFade.setOnFinished(titleEvent -> {
                     FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
                     fade2.setFromValue(0.0);
                     fade2.setToValue(1.0);
@@ -47,7 +48,7 @@ public class Main extends Application {
                     startCustomizePage();
         });
 
-        Timeline timeline   = new Timeline(new KeyFrame(Duration.seconds(0.2), e ->{
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.2), e ->{
             if(myCharacter != null) {
                 if(myCharacter.isAlive) {
                     myCharacter.updateHP();
@@ -57,7 +58,20 @@ public class Main extends Application {
                     System.out.println("YOUR PRISONER DIED\nGAMVE OVER");
                     myCharacter = null;
                     root.getChildren().clear();
-                    gameOverState();
+
+                    //Create a fade transition for the BorderPane
+                    FadeTransition gameOverFade = new FadeTransition(Duration.seconds(1), root);
+                    gameOverFade.setFromValue(1.0);
+                    gameOverFade.setToValue(0.5);
+                    gameOverFade.setCycleCount(1);
+                    gameOverFade.setOnFinished(gameOverEvent -> {
+                        FadeTransition fade2 = new FadeTransition(Duration.seconds(0.5), root);
+                        fade2.setFromValue(0.5);
+                        fade2.setToValue(1.0);
+                        fade2.play();
+                        gameOverState();
+                    });
+                    gameOverFade.play();
                 }
             }
 
@@ -96,14 +110,39 @@ public class Main extends Application {
 //                    GameEnv env = new GameEnv(myCharacter);
                     GameEnv game = GameEnv.getInstance();
                     game.placeCharacter(myCharacter);
-                    root.setCenter(game.render());
+
+                    FadeTransition startGameFade = new FadeTransition(Duration.seconds(0.5), root);
+                    startGameFade.setFromValue(1.0);
+                    startGameFade.setToValue(0);
+                    startGameFade.setCycleCount(1);
+                    startGameFade.setOnFinished(gameEvent -> {
+                        FadeTransition startGameFade2 = new FadeTransition(Duration.seconds(1), root);
+                        startGameFade2.setFromValue(0);
+                        startGameFade2.setToValue(1.0);
+                        startGameFade2.play();
+                        root.setCenter(game.render());
+                    });
+                    startGameFade.play();
 
                     // Place inside a function
                     Panel gamePanel = new Panel();
+                    gamePanel.setButton(0, "Eat", (e -> {
+                        System.out.println("eat");
+                        myCharacter.feed();
+                    }));
                     gamePanel.setButton(1, "Play Minigame", (e -> {
                         gamePanel.setButton(0, "Push Up" ,(event2-> game.doPushDown()));
                         gamePanel.setButton(3, "Push Down",(event2-> game.doPushUp()));
                         game.playMinigame();}));
+                    gamePanel.setButton(2, "Clean", (e -> {
+                        System.out.println("clean");
+                        myCharacter.clean();
+                    }));
+                    gamePanel.setButton(3, "Sleep", (e -> {
+                        System.out.println("sleep");
+                        System.out.println("sleep");
+                        myCharacter.sleep();
+                    }));
 
                     root.setBottom(gamePanel.getBottom());
                     root.setLeft(gamePanel.getLeft());
@@ -164,12 +203,20 @@ public class Main extends Application {
         playAgainButton.setStyle("-fx-background-color: black");
         playAgainButton.setFont(new Font("Arial", 20));
         playAgainButton.setTextFill(Color.WHITE);
+        playAgainButton.setOnAction(event -> {
+            startCustomizePage();
+        });
 
         Button exitButton = new Button("Exit");
         exitButton.setPrefSize(150, 50);
         exitButton.setStyle("-fx-background-color: black");
         exitButton.setFont(new Font("Arial", 20));
         exitButton.setTextFill(Color.WHITE);
+        exitButton.setOnAction(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
 
         HBox gameOverButtons = new HBox(20, playAgainButton, exitButton);
         gameOverButtons.setAlignment(Pos.CENTER);
