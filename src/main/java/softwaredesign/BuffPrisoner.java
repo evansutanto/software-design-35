@@ -3,14 +3,19 @@ package softwaredesign;
 import javafx.scene.image.Image;
 
 public class BuffPrisoner extends Character {
-    Image charImage = new Image(getClass().getResource("Buff.png").toExternalForm());
-    Image specialImage = new Image(getClass().getResource("Buff.png").toExternalForm()); // should make a flexing image
+    Image buffImage = new Image(getClass().getResource("Buff.png").toExternalForm());
+    Image buffPushDown = new Image(getClass().getResource("BuffDown.png").toExternalForm());
+    Image buffPushUp = new Image(getClass().getResource("BuffUp.png").toExternalForm());
+    Image specialImage = new Image(getClass().getResource("BuffFlex.png").toExternalForm()); // should make a flexing image
 
     public void flex(){
         // change pictures to flexing
         System.out.println("ARGGHHHH am big");
     }
     public  BuffPrisoner(){
+        charImage = buffImage;
+        charPushDown = buffPushDown;
+        charPushUp = buffPushUp;
         name = "Buff";
         hungerVital = new Hunger();
         sleepVital = new Sleepiness();

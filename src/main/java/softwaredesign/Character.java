@@ -4,8 +4,10 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
 public abstract class Character {
-    String charImage;
     Image specialImage;
+    public Image charImage;
+    public Image charPushUp;
+    public Image charPushDown;
     public String name;
     public Hunger hungerVital;
     public Sleepiness sleepVital;
@@ -24,7 +26,7 @@ public abstract class Character {
     public Character getCharacter(){
         return this;
     }
-    public void feed(){
+    public void feed() {
         hungerVital.value += 25;
         if(hungerVital.value > 100) hungerVital.value = 100;
     }
@@ -113,10 +115,10 @@ public abstract class Character {
 }
 
 /* NOTES
-* modify in UML
-* wakeup() should be sleep()
-* for buff prisoner eatBig() will be flex()
-* add check() to Character class
-* isDead() is removed
-*
-* */
+ * modify in UML
+ * wakeup() should be sleep()
+ * for buff prisoner eatBig() will be flex()
+ * add check() to Character class
+ * isDead() is removed
+ *
+ * */
