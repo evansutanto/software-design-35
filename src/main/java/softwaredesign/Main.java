@@ -6,7 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -14,18 +15,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class Main extends Application {
-    BorderPane root = new BorderPane();
+    BorderPane root;
     String chosenCharType;
     Character myCharacter;
     @Override
     public void start(Stage stage) throws IOException {
-
+        root = new BorderPane();
         titleState();
 
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
@@ -65,11 +65,11 @@ public class Main extends Application {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-
         Scene scene = new Scene(root);
         stage.setTitle("Jailbird!");
         stage.setWidth(800);
         stage.setHeight(600);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -78,6 +78,8 @@ public class Main extends Application {
         CustomizationPage selectCharacter = new CustomizationPage();
         Panel panel = new Panel();
         Button selectButton = new Button("Select");
+        selectButton.setPrefSize(500, 100);
+        selectButton.setStyle("-fx-font-size: 3em;");
         panel.setBottom(selectButton);
         root.setBottom(panel.getBottom());
         root.setLeft(panel.getLeft());
@@ -96,14 +98,15 @@ public class Main extends Application {
 //                    GameEnv env = new GameEnv(myCharacter);
                     GameEnv game = GameEnv.getInstance();
                     game.placeCharacter(myCharacter);
-                    root.setCenter(game.render());
+                    root.setCenter(game);
 
                     // Place inside a function
                     Panel gamePanel = new Panel();
                     gamePanel.setButton(1, "Play Minigame", (e -> {
-                        gamePanel.setButton(0, "Push Up" ,(event2-> game.doPushDown()));
-                        gamePanel.setButton(3, "Push Down",(event2-> game.doPushUp()));
-                        game.playMinigame();}));
+                        gamePanel.setButton(0, "Push Down" ,(ev-> game.doPushDown()));
+                        gamePanel.setButton(3, "Push Up",(ev-> game.doPushUp()));
+                        game.playMinigame();
+                    }));
 
                     root.setBottom(gamePanel.getBottom());
                     root.setLeft(gamePanel.getLeft());
