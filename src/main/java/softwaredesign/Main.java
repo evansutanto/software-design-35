@@ -122,7 +122,7 @@ public class Main extends Application {
                         startGameFade2.setFromValue(0);
                         startGameFade2.setToValue(1.0);
                         startGameFade2.play();
-                        root.setCenter(game.render());
+                        root.setCenter(game);
                     });
                     startGameFade.play();
 
@@ -141,7 +141,6 @@ public class Main extends Application {
                         myCharacter.clean();
                     }));
                     gamePanel.setButton(3, "Sleep", (e -> {
-                        System.out.println("sleep");
                         System.out.println("sleep");
                         myCharacter.sleep();
                     }));
