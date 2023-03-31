@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
 public abstract class Character {
-    Image specialImage;
+    public Image specialImage;
     public Image charImage;
     public Image charPushUp;
     public Image charPushDown;
