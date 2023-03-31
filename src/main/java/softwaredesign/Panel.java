@@ -79,8 +79,9 @@ public class Panel {
         bottom.getChildren().clear();
         bottom.getChildren().add(input);
     }
-    public void setButton(int index, EventHandler<MouseEvent> event) {
+    public void setButton(int index, String text, EventHandler<MouseEvent> event) {
         buttons.get(index).setFunction(event);
+        buttons.get(index).rename(text);
     }
     public void setTracker() {
         Tracker hunger = new Tracker();

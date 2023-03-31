@@ -12,15 +12,20 @@ import javafx.scene.text.TextBoundsType;
 
 public class myButton extends StackPane {
     private Button btn;
+    private Text txt;
     public myButton(String text) {
-        Circle circle = new Circle(30, Color.WHITESMOKE);
-        btn = new Button(text);
+        Circle circle = new Circle(50, Color.WHITESMOKE);
+        btn = new Button();
+        txt = new Text(text);
         btn.setStyle("-fx-background-color: transparent;");
         btn.setPrefSize(75, 75);
-        this.getChildren().addAll(circle, btn);
+        this.getChildren().addAll(circle, txt, btn);
     }
     public void setFunction(EventHandler<MouseEvent> event) {
         btn.setOnMouseClicked(null);
         btn.setOnMouseClicked(event);
+    }
+    public void rename(String newText) {
+        txt.setText(newText);
     }
 }
