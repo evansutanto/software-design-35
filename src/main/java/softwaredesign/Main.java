@@ -1,7 +1,6 @@
 package softwaredesign;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -48,8 +47,24 @@ public class Main extends Application {
                     startCustomizePage();
         });
 
-//        gameOverState();
-//        CharacterFactory charFactory = new CharacterFactory();
+        Timeline timeline   = new Timeline(new KeyFrame(Duration.seconds(0.2), e ->{
+            if(myCharacter != null) {
+                if(myCharacter.isAlive) {
+                    myCharacter.updateHP();
+                    myCharacter.updateVitals();
+                }
+                else {
+                    System.out.println("YOUR PRISONER DIED\nGAMVE OVER");
+                    myCharacter = null;
+                    root.getChildren().clear();
+                    gameOverState();
+                }
+            }
+
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
 
         Scene scene = new Scene(root);
         stage.setTitle("Jailbird!");
@@ -57,33 +72,6 @@ public class Main extends Application {
         stage.setHeight(600);
         stage.setScene(scene);
         stage.show();
-
-//        CharacterFactory charFactory = new CharacterFactory();
-//        myCharacter = charFactory.createCharacter(chosenCharType);
-
-        Timer timer = new Timer();
-        TimerTask task1 = new TimerTask() {
-            @Override
-            public void run() {
-                  if(myCharacter != null) {
-                      myCharacter.updateHP();
-                      if(!myCharacter.isAlive){
-                          System.out.println("YOUR PRISONER DIED\nGAMVE OVER");
-                          timer.cancel();
-                      }
-                  }
-            }
-        };
-        TimerTask task2 = new TimerTask() {
-            @Override
-            public void run() {
-                if(myCharacter != null) {
-                    myCharacter.updateVitals();
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(task1, 5000, 5000);
-        timer.scheduleAtFixedRate(task2, 5000, 1000);
     }
 
     public void startCustomizePage() {
