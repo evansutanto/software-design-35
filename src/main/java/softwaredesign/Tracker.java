@@ -17,16 +17,8 @@ public class Tracker implements Observer {
     ProgressBar pb = new ProgressBar();
     double ii;
     public Tracker() {
-        ii = 0;
-        // action event
-        EventHandler<ActionEvent> event = e -> {
-            // set progress to different level of progressbar
-            ii += 0.1;
-            pb.setProgress(value);
-        };
-        // creating button
-        // set on action
-        b.setOnAction(event);
+        value = 1.0;
+        pb.setProgress(value);
     }
     public ProgressBar render() {
         r.getChildren().add(pb);
@@ -39,9 +31,12 @@ public class Tracker implements Observer {
     }
 
     @Override
-    public void update(int value) {
-        this.value = ((double)value) / 100;
-        System.out.println("updated(): " + this.value);
-        pb.setProgress(value);
+    public void update(int val) {
+        double newVal = ((double) val) / 100;
+        this.value = newVal;
+        if(this.value < 0 ){
+            this.value = 0;
+        }
+        pb.setProgress(this.value);
     }
 }

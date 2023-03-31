@@ -9,7 +9,7 @@ public class DancerPrisoner extends Character {
     Image dancerImage = new Image(getClass().getResource("Dancer.png").toExternalForm());
     Image dancerPushDown = new Image(getClass().getResource("DancerDown.png").toExternalForm());
     Image dancerPushUp = new Image(getClass().getResource("DancerUp.png").toExternalForm());
-    Image specialImage = new Image(getClass().getResource("Dancer.png").toExternalForm()); // should make a dancing picture
+    Image dancerSpecial = new Image(getClass().getResource("DancerDance1.png").toExternalForm());// should make a dancing picture
 
     public void dance(){
         // change to dancing pictures
@@ -17,6 +17,7 @@ public class DancerPrisoner extends Character {
     }
 
     public DancerPrisoner(){
+        specialImage = dancerSpecial;
         charImage = dancerImage;
         charPushDown = dancerPushDown;
         charPushUp = dancerPushUp;

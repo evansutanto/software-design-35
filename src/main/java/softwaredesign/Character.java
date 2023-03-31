@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
 public abstract class Character {
-    Image specialImage;
+    public Image specialImage;
     public Image charImage;
     public Image charPushUp;
     public Image charPushDown;
@@ -66,8 +66,10 @@ public abstract class Character {
         healthVital.value += toAdd;
         if(healthVital.value > 100) healthVital.value = 100;
         if(healthVital.value <= 0){
+            healthVital.value = 0;
             isAlive = false;
         }
+
         healthVital.notifyObservers();
         System.out.println("Vitals Updated:");
         System.out.println("Hunger = " + hungerVital.value);
@@ -110,7 +112,6 @@ public abstract class Character {
         sleepVital.notifyObservers();
         moodVital.notifyObservers();
     }
-
 }
 
 /* NOTES
