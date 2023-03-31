@@ -14,7 +14,7 @@ public abstract class Vital implements Subject {
         myTracker = obs;
      }
      @Override
-     public void detach(Observer obs) {
+     public void detach() {
         myTracker = null;
      }
      @Override
