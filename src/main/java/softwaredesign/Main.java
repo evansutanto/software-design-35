@@ -24,6 +24,7 @@ public class Main extends Application {
     BorderPane root;
     String chosenCharType;
     Character myCharacter;
+    GameEnv myGameEnv;
     @Override
     public void start(Stage stage) throws IOException {
         root = new BorderPane();
@@ -48,7 +49,7 @@ public class Main extends Application {
                     startCustomizePage();
         });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.2), e ->{
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e ->{
             if(myCharacter != null) {
                 if(myCharacter.isAlive) {
                     myCharacter.updateHP();
@@ -56,8 +57,7 @@ public class Main extends Application {
                 }
                 else {
                     System.out.println("YOUR PRISONER DIED\nGAMVE OVER");
-                    GameEnv game = GameEnv.getInstance();
-                    game.clearCharacter();
+                    myGameEnv.clearCharacter();
                     myCharacter = null;
                     root.getChildren().clear();
 
@@ -111,58 +111,10 @@ public class Main extends Application {
                     chosenCharType = selectCharacter.selectedCharacter;
                     CharacterFactory charFactory = new CharacterFactory();
                     myCharacter = charFactory.createCharacter(chosenCharType);
-//                    GameEnv env = new GameEnv(myCharacter);
-                    GameEnv game = GameEnv.getInstance();
-                    game.placeCharacter(myCharacter);
+                    myGameEnv = GameEnv.getInstance();
+                    myGameEnv.placeCharacter(myCharacter);
+                    startCellEnv();
 
-                    FadeTransition startGameFade = new FadeTransition(Duration.seconds(0.5), root);
-                    startGameFade.setFromValue(1.0);
-                    startGameFade.setToValue(0);
-                    startGameFade.setCycleCount(1);
-                    startGameFade.setOnFinished(gameEvent -> {
-                        FadeTransition startGameFade2 = new FadeTransition(Duration.seconds(1), root);
-                        startGameFade2.setFromValue(0);
-                        startGameFade2.setToValue(1.0);
-                        startGameFade2.play();
-                        root.setCenter(game);
-                    });
-                    startGameFade.play();
-
-                    // Place inside a function
-                    Panel gamePanel = new Panel();
-                    gamePanel.setButton(0, "Eat", (e -> {
-                        System.out.println("eat");
-                        myCharacter.feed();
-                    }));
-                    gamePanel.setButton(1, "Play Minigame", (e -> {
-                        gamePanel.setButton(0, "Push Up" ,(event2-> game.doPushDown()));
-                        gamePanel.setButton(1, "" ,(event2-> System.out.println("empty button")));
-                        gamePanel.setButton(2, "",(event2-> System.out.println("empty button")));
-                        gamePanel.setButton(3, "Push Down",(event2-> game.doPushUp()));
-                        gamePanel.setButton(4, "",(event2-> System.out.println("empty button")));
-                        game.playMinigame();}));
-                    gamePanel.setButton(2, "Clean", (e -> {
-                        System.out.println("clean");
-                        myCharacter.clean();
-                    }));
-                    gamePanel.setButton(3, "Sleep", (e -> {
-                        System.out.println("sleep");
-                        myCharacter.sleep();
-                    }));
-                    gamePanel.setButton(4, "Special Ability", (e -> {
-                        System.out.println("Special");
-                        game.specialAbility();
-                    }));
-
-                    root.setBottom(gamePanel.getBottom());
-                    root.setLeft(gamePanel.getLeft());
-                    root.setRight(gamePanel.getRight());
-
-                    myCharacter.hungerVital.attach(gamePanel.hungerTracker);
-                    myCharacter.hygineVital.attach(gamePanel.hygienTracker);
-                    myCharacter.sleepVital.attach(gamePanel.sleepTracker);
-                    myCharacter.moodVital.attach(gamePanel.moodTracker);
-                    myCharacter.healthVital.attach(gamePanel.healthTracker);
                 }
             }
         });
@@ -236,6 +188,66 @@ public class Main extends Application {
 
         root.setCenter(gameOverContainer);
         root.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, null, null)));
+    }
+
+    public void startCellEnv(){
+        FadeTransition startGameFade = new FadeTransition(Duration.seconds(0.5), root);
+        startGameFade.setFromValue(1.0);
+        startGameFade.setToValue(0);
+        startGameFade.setCycleCount(1);
+        startGameFade.setOnFinished(gameEvent -> {
+            FadeTransition startGameFade2 = new FadeTransition(Duration.seconds(1), root);
+            startGameFade2.setFromValue(0);
+            startGameFade2.setToValue(1.0);
+            startGameFade2.play();
+            root.setCenter(myGameEnv);
+        });
+        startGameFade.play();
+
+        // Place inside a function
+        Panel gamePanel = new Panel();
+        gamePanel.setButton(0, "Eat", (e -> {
+            System.out.println("eat");
+            myCharacter.feed();
+        }));
+        gamePanel.setButton(1, "Play Minigame", (e -> {
+            gamePanel.setButton(0, "Push Down" ,(event2-> myGameEnv.doPushDown()));
+            gamePanel.setButton(1, "" ,(event2-> System.out.println("empty button")));
+            gamePanel.setButton(2, "",(event2-> System.out.println("empty button")));
+            gamePanel.setButton(3, "Push Up",(event2-> myGameEnv.doPushUp()));
+            Object FadeTransition;
+            gamePanel.setButton(4, "Go Back",(event2-> {
+                System.out.println("Go Back button Pressed");
+                startCellEnv();
+                // just like we just started the game
+            }));
+            myGameEnv.playMinigame();}));
+        gamePanel.setButton(2, "Clean", (e -> {
+            System.out.println("clean");
+            myCharacter.clean();
+        }));
+        gamePanel.setButton(3, "Sleep", (e -> {
+            System.out.println("sleep");
+            myCharacter.sleep();
+        }));
+        gamePanel.setButton(4, "Special Ability", (e -> {
+            System.out.println("Special");
+            myGameEnv.specialAbility();
+        }));
+
+        // my addition
+        myGameEnv.characterModel.setImage(myCharacter.charImage);
+
+        root.setBottom(gamePanel.getBottom());
+        root.setLeft(gamePanel.getLeft());
+        root.setRight(gamePanel.getRight());
+
+        myCharacter.hungerVital.attach(gamePanel.hungerTracker);
+        myCharacter.hygineVital.attach(gamePanel.hygienTracker);
+        myCharacter.sleepVital.attach(gamePanel.sleepTracker);
+        myCharacter.moodVital.attach(gamePanel.moodTracker);
+        myCharacter.healthVital.attach(gamePanel.healthTracker);
+        myGameEnv.changeToCell();
     }
     private void startGame() {
 

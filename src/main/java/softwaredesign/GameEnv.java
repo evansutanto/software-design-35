@@ -26,7 +26,7 @@ public class GameEnv extends HBox{
     private Label timerLabel;
     private static final Integer STARTTIME = 15;
     private IntegerProperty timeSeconds;
-    private ImageView characterModel;
+    public ImageView characterModel;
     private Image cellbg = new Image(getClass().getResource("Cell.jpeg").toExternalForm());
     private Image backyardbg =  new Image(getClass().getResource("backyardBackground.png").toExternalForm());
     private BackgroundImage cell = new BackgroundImage(cellbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
@@ -79,6 +79,7 @@ public class GameEnv extends HBox{
         if (pushupDone) {
             score += 1;
             scoreGUI.setText("SCORE: \n" + score);
+            character.moodVital.value += 10;
             pushupDone = false;
         }
     }
@@ -92,7 +93,7 @@ public class GameEnv extends HBox{
         characterModel.setImage(this.character.charPushUp);
         this.getChildren().addAll(scoreGUI, characterModel, timerLabel);
     }
-    private void changeToCell() {
+    public void changeToCell() {
         clearCharacter();
         this.setBackground(new Background(cell));
         characterModel.setImage(this.character.charImage);
