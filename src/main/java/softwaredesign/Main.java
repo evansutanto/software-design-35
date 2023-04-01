@@ -56,6 +56,8 @@ public class Main extends Application {
                 }
                 else {
                     System.out.println("YOUR PRISONER DIED\nGAMVE OVER");
+                    GameEnv game = GameEnv.getInstance();
+                    game.clearCharacter();
                     myCharacter = null;
                     root.getChildren().clear();
 

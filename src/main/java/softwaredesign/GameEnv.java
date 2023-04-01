@@ -97,4 +97,7 @@ public class GameEnv extends HBox{
         characterModel.setImage(this.character.charImage);
         this.getChildren().add(characterModel);
     }
+    public void clearCharacter(){
+        this.getChildren().clear();
+    }
 }
