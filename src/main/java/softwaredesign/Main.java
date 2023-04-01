@@ -217,7 +217,6 @@ public class Main extends Application {
             gamePanel.setButton(3, "Push Up",(event2-> myGameEnv.doPushUp()));
             Object FadeTransition;
             gamePanel.setButton(4, "Go Back",(event2-> {
-                System.out.println("Go Back button Pressed");
                 startCellEnv();
                 // just like we just started the game
             }));
