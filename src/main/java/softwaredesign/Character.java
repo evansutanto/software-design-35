@@ -103,12 +103,3 @@ public abstract class Character {
         moodVital.notifyObservers();
     }
 }
-
-/* NOTES
- * modify in UML
- * wakeup() should be sleep()
- * for buff prisoner eatBig() will be flex()
- * add check() to Character class
- * isDead() is removed
- *
- * */

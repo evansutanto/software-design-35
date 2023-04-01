@@ -21,11 +21,11 @@ import java.io.IOException;
 
 
 public class Main extends Application {
-    BorderPane root;
-    String chosenCharType;
-    Character myCharacter;
-    GameEnv myGameEnv;
-    Panel myPanel;
+    private BorderPane root;
+    private String chosenCharType;
+    private Character myCharacter;
+    private GameEnv myGameEnv;
+    private Panel myPanel;
     private static final Integer STARTTIME = 15;
     private static final Integer CHECKTIME = 2;
     @Override

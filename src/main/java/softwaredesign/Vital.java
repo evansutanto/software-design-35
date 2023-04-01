@@ -30,25 +30,14 @@ public abstract class Vital implements Subject {
 
 class Health extends Vital{
      String text = "HP";
-     public boolean isAlive(){
-         if (value > 0){
-             return true;
-         }
-         return false;
-     }
 }
 class Hunger extends Vital{
      String text = "Hunger";
      public int criticalness = 5;
-     Hunger(){
-         value = 100;
-     }
-
 }
 class Mood extends Vital{
      String text = "Mood";
      public int criticalness = 3;
-
 }
 class Hygiene extends Vital{
      String text = "Hygiene";
