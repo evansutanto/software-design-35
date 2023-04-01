@@ -1,6 +1,5 @@
 package softwaredesign;
 
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
 public abstract class Character {
@@ -11,7 +10,7 @@ public abstract class Character {
     public String name;
     public Hunger hungerVital;
     public Sleepiness sleepVital;
-    public Hygiene hygineVital;
+    public Hygiene hygieneVital;
     public Mood moodVital;
     public Health healthVital;
     public boolean hungry;
@@ -20,31 +19,22 @@ public abstract class Character {
     public boolean sad;
     public boolean isAlive;
 
-//        + giveScore(): void
-//        + destroy(): void
-
-    public Character getCharacter(){
-        return this;
-    }
     public void feed() {
         hungerVital.value += 25;
         if(hungerVital.value > 100) hungerVital.value = 100;
     }
     public void clean(){
-        hygineVital.value += 30;
-        if(hygineVital.value > 100) hygineVital.value = 100;
+        hygieneVital.value += 30;
+        if(hygieneVital.value > 100) hygieneVital.value = 100;
     }
     public void sleep(){
         sleepVital.value += 30;
         if(sleepVital.value > 100) sleepVital.value = 100;
     }
-    public void incHP(int toAdd){
-        healthVital.value += toAdd;
+    public void increaseMood() {
+        moodVital.value += 10;
+        if(moodVital.value > 100) moodVital.value = 100;
     }
-    public void decHP(int toTake){
-        healthVital.value -= toTake;
-    }
-
     public void updateHP(){// checks vitals and updates HP accordingly
         int toAdd = 0;
         if(hungry){
@@ -56,8 +46,8 @@ public abstract class Character {
             if(sleepVital.value == 0) toAdd -= sleepVital.criticalness;
         } else{ toAdd += 2;}
         if(dirty){
-            toAdd -= hygineVital.criticalness;
-            if(hygineVital.value == 0) toAdd -= hygineVital.criticalness;
+            toAdd -= hygieneVital.criticalness;
+            if(hygieneVital.value == 0) toAdd -= hygieneVital.criticalness;
         } else {toAdd += 2;}
         if(sad){
             toAdd -= moodVital.criticalness;
@@ -71,12 +61,12 @@ public abstract class Character {
         }
 
         healthVital.notifyObservers();
-        System.out.println("Vitals Updated:");
-        System.out.println("Hunger = " + hungerVital.value);
-        System.out.println("Sleep = " + sleepVital.value);
-        System.out.println("Hygien = " + hygineVital.value);
-        System.out.println("Mood = " + moodVital.value);
-        System.out.println("HP = " + healthVital.value);
+        System.out.println("\nVitals Updated\n");
+        System.out.print(" Hunger = " + hungerVital.value);
+        System.out.print(" Sleep = " + sleepVital.value);
+        System.out.print(" Hygiene = " + hygieneVital.value);
+        System.out.print(" Mood = " + moodVital.value);
+        System.out.print(" HP = " + healthVital.value);
     }
     public void updateVitals(){
         hungerVital.value -= 5;
@@ -86,10 +76,10 @@ public abstract class Character {
         }
         else  hungry = false;
 
-        hygineVital.value -= 3;
-        if(hygineVital.value < 20) {
+        hygieneVital.value -= 3;
+        if(hygieneVital.value < 20) {
             dirty = true;
-            if(hygineVital.value < 0 ) hygineVital.value = 0;
+            if(hygieneVital.value < 0 ) hygieneVital.value = 0;
         }
         else  dirty = false;
 
@@ -108,7 +98,7 @@ public abstract class Character {
         else  sad = false;
 
         hungerVital.notifyObservers();
-        hygineVital.notifyObservers();
+        hygieneVital.notifyObservers();
         sleepVital.notifyObservers();
         moodVital.notifyObservers();
     }

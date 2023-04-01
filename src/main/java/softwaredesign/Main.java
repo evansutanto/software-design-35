@@ -3,8 +3,6 @@ package softwaredesign;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,6 +23,7 @@ public class Main extends Application {
     String chosenCharType;
     Character myCharacter;
     GameEnv myGameEnv;
+    Panel myPanel;
     @Override
     public void start(Stage stage) throws IOException {
         root = new BorderPane();
@@ -33,20 +32,18 @@ public class Main extends Application {
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         FadeTransition titlePageFade = new FadeTransition(Duration.seconds(1), root);
 
-        // Create a delay transition for the titleState
         delay.setOnFinished(e -> titlePageFade.play());
         delay.play();
 
-        //Create a titlePageFade transition for the BorderPane
         titlePageFade.setFromValue(1.0);
         titlePageFade.setToValue(0.0);
         titlePageFade.setCycleCount(1);
         titlePageFade.setOnFinished(titleEvent -> {
-                    FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
-                    fade2.setFromValue(0.0);
-                    fade2.setToValue(1.0);
-                    fade2.play();
-                    startCustomizePage();
+            FadeTransition fade2 = new FadeTransition(Duration.seconds(1.5), root);
+            fade2.setFromValue(0.0);
+            fade2.setToValue(1.0);
+            fade2.play();
+            startCustomizePage();
         });
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e ->{
@@ -61,7 +58,6 @@ public class Main extends Application {
                     myCharacter = null;
                     root.getChildren().clear();
 
-                    //Create a fade transition for the BorderPane
                     FadeTransition gameOverFade = new FadeTransition(Duration.seconds(1), root);
                     gameOverFade.setFromValue(1.0);
                     gameOverFade.setToValue(0.5);
@@ -92,34 +88,29 @@ public class Main extends Application {
 
     public void startCustomizePage() {
         CustomizationPage selectCharacter = new CustomizationPage();
-        Panel panel = new Panel();
+
+        myPanel = new Panel();
         Button selectButton = new Button("Select");
         selectButton.setPrefSize(500, 100);
         selectButton.setStyle("-fx-font-size: 3em;");
-        panel.setBottom(selectButton);
-        root.setBottom(panel.getBottom());
-        root.setLeft(panel.getLeft());
-        root.setRight(panel.getRight());
-        root.setCenter(selectCharacter.renderOption());
-        chosenCharType = selectCharacter.selectedCharacter;
-        selectButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Selected character: " + selectCharacter.selectedCharacter);
+        myPanel.setBottom(selectButton);
 
-                if (selectCharacter.selectedCharacter != null) {
-                    chosenCharType = selectCharacter.selectedCharacter;
-                    CharacterFactory charFactory = new CharacterFactory();
-                    myCharacter = charFactory.createCharacter(chosenCharType);
-                    myGameEnv = GameEnv.getInstance();
-                    myGameEnv.placeCharacter(myCharacter);
-                    startCellEnv();
+        root.setBottom(myPanel.getBottom());
+        root.setLeft(myPanel.getLeft());
+        root.setRight(myPanel.getRight());
+        root.setCenter(selectCharacter);
 
-                }
+        selectButton.setOnAction(event -> {
+            System.out.println("Selected character: " + selectCharacter.chosenCharacter);
+
+            if (selectCharacter.chosenCharacter != null) {
+                chosenCharType = selectCharacter.chosenCharacter;
+                CharacterFactory charFactory = new CharacterFactory();
+                myCharacter = charFactory.createCharacter(chosenCharType);
+
+                startGame();
             }
         });
-    }
-    public void initCustomPanel() {
     }
     private Label authorIdentity(String name){
         Label nameLabel = new Label(name);
@@ -165,9 +156,7 @@ public class Main extends Application {
         playAgainButton.setStyle("-fx-background-color: black");
         playAgainButton.setFont(new Font("Arial", 20));
         playAgainButton.setTextFill(Color.WHITE);
-        playAgainButton.setOnAction(event -> {
-            startCustomizePage();
-        });
+        playAgainButton.setOnAction(event -> startCustomizePage());
 
         Button exitButton = new Button("Exit");
         exitButton.setPrefSize(150, 50);
@@ -190,82 +179,49 @@ public class Main extends Application {
         root.setBackground(new Background(new BackgroundFill(Color.DARKSLATEGRAY, null, null)));
     }
 
-    public void startCellEnv(){
-        FadeTransition startGameFade = new FadeTransition(Duration.seconds(0.5), root);
-        startGameFade.setFromValue(1.0);
-        startGameFade.setToValue(0);
-        startGameFade.setCycleCount(1);
-        startGameFade.setOnFinished(gameEvent -> {
-            FadeTransition startGameFade2 = new FadeTransition(Duration.seconds(1), root);
-            startGameFade2.setFromValue(0);
-            startGameFade2.setToValue(1.0);
-            startGameFade2.play();
-            root.setCenter(myGameEnv);
-        });
-        startGameFade.play();
+    public void startGame(){
+        myGameEnv = GameEnv.getInstance();
+        myGameEnv.placeCharacter(myCharacter);
+        myGameEnv.changeToCell();
+        root.setCenter(myGameEnv);
 
-        // Place inside a function
-        Panel gamePanel = new Panel();
-        gamePanel.setButton(0, "Eat", (e -> {
+        myPanel.setButton(0, "Eat", (e -> {
             System.out.println("eat");
-            myCharacter.feed();
+            myGameEnv.getCharacter().feed();
         }));
-        gamePanel.setButton(1, "Play Minigame", (e -> {
-            gamePanel.setButton(0, "Push Down" ,(event2-> myGameEnv.doPushDown()));
-            gamePanel.setButton(1, "" ,(event2-> System.out.println("empty button")));
-            gamePanel.setButton(2, "",(event2-> System.out.println("empty button")));
-            gamePanel.setButton(3, "Push Up",(event2-> myGameEnv.doPushUp()));
-            Object FadeTransition;
-            gamePanel.setButton(4, "Go Back",(event2-> {
-                startCellEnv();
-                // just like we just started the game
-            }));
-            myGameEnv.playMinigame();}));
-        gamePanel.setButton(2, "Clean", (e -> {
+        myPanel.setButton(1, "Play Minigame", (e -> {
+            myPanel.setButton(0, "Push Down" ,(event2-> myGameEnv.doPushDown()));
+            myPanel.setButton(1, "Go Back",(event2-> startGame()));
+            myPanel.setButton(2, "",(event2-> System.out.println("empty button")));
+            myPanel.setButton(3, "Push Up",(event2-> myGameEnv.doPushUp()));
+            myPanel.setButton(4, "" ,(event2-> System.out.println("empty button")));
+            myGameEnv.playMinigame();
+        }));
+        myPanel.setButton(2, "Clean", (e -> {
             System.out.println("clean");
-            myCharacter.clean();
+            myGameEnv.getCharacter().clean();
         }));
-        gamePanel.setButton(3, "Sleep", (e -> {
+        myPanel.setButton(3, "Sleep", (e -> {
             System.out.println("sleep");
-            myCharacter.sleep();
+            myGameEnv.getCharacter().sleep();
         }));
-        gamePanel.setButton(4, "Special Ability", (e -> {
+        myPanel.setButton(4, "Special Ability", (e -> {
             System.out.println("Special");
             myGameEnv.specialAbility();
         }));
 
-        // my addition
-        myGameEnv.characterModel.setImage(myCharacter.charImage);
+        myPanel.setTracker();
 
-        root.setBottom(gamePanel.getBottom());
-        root.setLeft(gamePanel.getLeft());
-        root.setRight(gamePanel.getRight());
+        root.setBottom(myPanel.getBottom());
+        root.setLeft(myPanel.getLeft());
+        root.setRight(myPanel.getRight());
 
-        myCharacter.hungerVital.attach(gamePanel.hungerTracker);
-        myCharacter.hygineVital.attach(gamePanel.hygienTracker);
-        myCharacter.sleepVital.attach(gamePanel.sleepTracker);
-        myCharacter.moodVital.attach(gamePanel.moodTracker);
-        myCharacter.healthVital.attach(gamePanel.healthTracker);
-        myGameEnv.changeToCell();
+        myCharacter.hungerVital.attach(myPanel.hungerTracker);
+        myCharacter.hygieneVital.attach(myPanel.hygieneTracker);
+        myCharacter.sleepVital.attach(myPanel.sleepTracker);
+        myCharacter.moodVital.attach(myPanel.moodTracker);
+        myCharacter.healthVital.attach(myPanel.healthTracker);
     }
-    private void startGame() {
-
-
-        Panel panel = new Panel();
-        root.setBottom(panel.getBottom());
-        root.setLeft(panel.getLeft());
-        root.setRight(panel.getRight());
-    }
-
-    public void startPanel() {
-
-    }
-
-    /* Unsure about destructor as exit
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    } */
 
     public static void main(String[] args) {
         launch();
