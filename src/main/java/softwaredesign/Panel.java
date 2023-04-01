@@ -22,8 +22,8 @@ public class Panel {
     private final VBox sidebarRight;
     private final HBox bottom;
     public Panel() {
-        sidebarLeft = new VBox(50);
-        sidebarRight = new VBox(50);
+        sidebarLeft = new VBox(20);
+        sidebarRight = new VBox(20);
 
         sidebarLeft.setPadding(new Insets(10, 50, 50, 50));
         sidebarLeft.setAlignment(Pos.CENTER);
@@ -50,10 +50,10 @@ public class Panel {
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
         // TODO: Not sure if should be made into variables
-        buttons = List.of(new myButton("A"), new myButton("B"), new myButton("C"), new myButton("D"));
+        buttons = List.of(new myButton("A"), new myButton("B"), new myButton("C"), new myButton("D"), new myButton("E"));
 
-        sidebarLeft.getChildren().addAll(buttons.get(0), buttons.get(1));
-        sidebarRight.getChildren().addAll(buttons.get(2), buttons.get(3));
+        sidebarLeft.getChildren().addAll(buttons.get(0), buttons.get(1), buttons.get(2));
+        sidebarRight.getChildren().addAll(buttons.get(3), buttons.get(4));
     }
     public VBox getRight() {
         sidebarRight.setBackground(Background.fill(Color.PINK));

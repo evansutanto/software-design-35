@@ -136,7 +136,10 @@ public class Main extends Application {
                     }));
                     gamePanel.setButton(1, "Play Minigame", (e -> {
                         gamePanel.setButton(0, "Push Up" ,(event2-> game.doPushDown()));
+                        gamePanel.setButton(1, "" ,(event2-> System.out.println("empty button")));
+                        gamePanel.setButton(2, "",(event2-> System.out.println("empty button")));
                         gamePanel.setButton(3, "Push Down",(event2-> game.doPushUp()));
+                        gamePanel.setButton(4, "",(event2-> System.out.println("empty button")));
                         game.playMinigame();}));
                     gamePanel.setButton(2, "Clean", (e -> {
                         System.out.println("clean");
@@ -145,6 +148,10 @@ public class Main extends Application {
                     gamePanel.setButton(3, "Sleep", (e -> {
                         System.out.println("sleep");
                         myCharacter.sleep();
+                    }));
+                    gamePanel.setButton(4, "Special Ability", (e -> {
+                        System.out.println("Special");
+                        game.specialAbility();
                     }));
 
                     root.setBottom(gamePanel.getBottom());

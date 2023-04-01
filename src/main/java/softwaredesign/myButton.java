@@ -14,11 +14,11 @@ public class myButton extends StackPane {
     private Button btn;
     private Text txt;
     public myButton(String text) {
-        Circle circle = new Circle(50, Color.WHITESMOKE);
+        Circle circle = new Circle(40, Color.WHITESMOKE);
         btn = new Button();
         txt = new Text(text);
         btn.setStyle("-fx-background-color: transparent;");
-        btn.setPrefSize(75, 75);
+        btn.setPrefSize(50, 50);
         this.getChildren().addAll(circle, txt, btn);
     }
     public void setFunction(EventHandler<MouseEvent> event) {

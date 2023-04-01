@@ -17,6 +17,7 @@ import javafx.util.Duration;
 
 public class GameEnv extends HBox{
     private static GameEnv instance;
+    boolean isCharImage = true;
     private boolean pushupDone;
     private Character character;
     private int score;
@@ -86,16 +87,26 @@ public class GameEnv extends HBox{
         pushupDone = true;
     }
     private void changeToYard() {
-        this.getChildren().clear();
+        clearCharacter();
         this.setBackground(new Background(backyard));
         characterModel.setImage(this.character.charPushUp);
         this.getChildren().addAll(scoreGUI, characterModel, timerLabel);
     }
     private void changeToCell() {
-        this.getChildren().clear();
+        clearCharacter();
         this.setBackground(new Background(cell));
         characterModel.setImage(this.character.charImage);
         this.getChildren().add(characterModel);
+    }
+    public void specialAbility(){
+        if(isCharImage){
+            characterModel.setImage(this.character.specialImage);
+            isCharImage = false;
+        }
+        else{
+            characterModel.setImage(this.character.charImage);
+            isCharImage = true;
+        }
     }
     public void clearCharacter(){
         this.getChildren().clear();
