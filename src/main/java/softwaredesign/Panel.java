@@ -40,16 +40,16 @@ public class Panel {
         sidebarRight.getChildren().addAll(buttons.get(3), buttons.get(4));
     }
     public VBox getRight() {
-        sidebarRight.setBackground(Background.fill(Color.PINK));
+        sidebarRight.setBackground(Background.fill(Color.DIMGRAY));
         return sidebarRight;
     }
     public VBox getLeft() {
-        sidebarLeft.setBackground(Background.fill(Color.LIGHTGREEN));
+        sidebarLeft.setBackground(Background.fill(Color.DIMGRAY));
         return sidebarLeft;
     }
     public HBox getBottom() {
         bottom.setPrefHeight(180);
-        bottom.setBackground(Background.fill(Color.LIGHTGRAY));
+        bottom.setBackground(Background.fill(Color.DIMGRAY));
         bottom.setSpacing(40);
         bottom.setAlignment(Pos.CENTER);
         return bottom;

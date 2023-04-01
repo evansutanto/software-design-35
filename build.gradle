@@ -25,4 +25,13 @@ dependencies {
 
 }
 
-mainClassName = 'softwaredesign.Main'
+mainClassName = 'softwaredesign.Launcher'
+
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources"]
+        }
+    }
+}

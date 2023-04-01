@@ -11,7 +11,9 @@ public class Tracker extends VBox implements Observer {
     public Tracker(String name) {
         value = 1.0;
         pb.setProgress(value);
-        this.getChildren().addAll(new Label(name), pb);
+        Label text = new Label(name);
+        text.setStyle("-fx-font-size: 1.8em; -fx-text-fill: white;");
+        this.getChildren().addAll(text, pb);
         this.setAlignment(Pos.CENTER);
     }
 

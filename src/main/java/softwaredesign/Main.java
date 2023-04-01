@@ -3,6 +3,8 @@ package softwaredesign;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,6 +26,8 @@ public class Main extends Application {
     Character myCharacter;
     GameEnv myGameEnv;
     Panel myPanel;
+    private static final Integer STARTTIME = 15;
+    private static final Integer CHECKTIME = 2;
     @Override
     public void start(Stage stage) throws IOException {
         root = new BorderPane();
@@ -46,7 +50,7 @@ public class Main extends Application {
             startCustomizePage();
         });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e ->{
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(CHECKTIME), e ->{
             if(myCharacter != null) {
                 if(myCharacter.isAlive) {
                     myCharacter.updateHP();
@@ -79,6 +83,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root);
         stage.setTitle("Jailbird!");
+        stage.getIcons().add(new Image(getClass().getResource("Buff.png").toExternalForm()));
         stage.setWidth(800);
         stage.setHeight(600);
         stage.setResizable(false);
@@ -88,8 +93,8 @@ public class Main extends Application {
 
     public void startCustomizePage() {
         CustomizationPage selectCharacter = new CustomizationPage();
-
         myPanel = new Panel();
+
         Button selectButton = new Button("Select");
         selectButton.setPrefSize(500, 100);
         selectButton.setStyle("-fx-font-size: 3em;");
@@ -101,7 +106,7 @@ public class Main extends Application {
         root.setCenter(selectCharacter);
 
         selectButton.setOnAction(event -> {
-            System.out.println("Selected character: " + selectCharacter.chosenCharacter);
+            System.out.println("CONFIRMED Character: " + selectCharacter.chosenCharacter);
 
             if (selectCharacter.chosenCharacter != null) {
                 chosenCharType = selectCharacter.chosenCharacter;
@@ -126,7 +131,7 @@ public class Main extends Application {
         HBox titleHBox = new HBox(titleImageView);
         titleHBox.setAlignment(Pos.TOP_CENTER);
 
-        Label groupLabel = authorIdentity("Group 35:");
+        Label groupLabel = authorIdentity("\u00a9 Asian Persuasion - Group 35:");
         Label TAlabel = authorIdentity("TA: Ariana Vargas Pastor");
         Label member1 = authorIdentity("Alvaro Pratama Maharto/2734663");
         Label member2 = authorIdentity("Mahmoud Ashtar/2696767");
@@ -168,7 +173,6 @@ public class Main extends Application {
             System.exit(0);
         });
 
-
         HBox gameOverButtons = new HBox(20, playAgainButton, exitButton);
         gameOverButtons.setAlignment(Pos.CENTER);
 
@@ -195,7 +199,18 @@ public class Main extends Application {
             myPanel.setButton(2, "",(event2-> System.out.println("empty button")));
             myPanel.setButton(3, "Push Up",(event2-> myGameEnv.doPushUp()));
             myPanel.setButton(4, "" ,(event2-> System.out.println("empty button")));
-            myGameEnv.playMinigame();
+
+            // Set the timer for the minigame
+            IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), event -> {
+                        timeSeconds.set(timeSeconds.get() - 1);
+                    })
+            );
+            timeline.setCycleCount(STARTTIME);
+            timeline.setOnFinished(event2 -> startGame());
+            timeline.play();
+            myGameEnv.playMinigame(timeSeconds);
         }));
         myPanel.setButton(2, "Clean", (e -> {
             System.out.println("clean");
