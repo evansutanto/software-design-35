@@ -15,8 +15,8 @@ public class GameEnv extends HBox{
     boolean isCharImage = true;
     private boolean pushupDone;
     private Character character;
-    private int score;
-    private final Label scoreGUI;
+    public int score;
+    private Label scoreGUI;
     private Label timerLabel;
     public ImageView characterModel;
     private final Image cellbg = new Image(getClass().getResource("Cell.jpeg").toExternalForm());
@@ -24,7 +24,7 @@ public class GameEnv extends HBox{
     private final BackgroundImage cell = new BackgroundImage(cellbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
     private final BackgroundImage backyard = new BackgroundImage(backyardbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
     private GameEnv() {
-        scoreGUI = new Label("SCORE:\n 0");
+
     }
 
     public void placeCharacter(Character myCharacter) {
@@ -44,6 +44,8 @@ public class GameEnv extends HBox{
         return instance;
     }
     public void playMinigame(IntegerProperty timeSeconds) {
+        score = 0;
+        scoreGUI = new Label("SCORE:\n 0");
         timerLabel = new Label();
         timerLabel.textProperty().bind(timeSeconds.asString());
         timerLabel.setTextFill(Color.RED);
