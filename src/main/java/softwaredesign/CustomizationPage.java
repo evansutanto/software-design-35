@@ -5,14 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
-public class CustomizationPage {
-    private ImageView selectedCharacterImageView;
-    private HBox selectedCharacterHBox;
-    private VBox characterOptionsContainer;
+public class CustomizationPage extends VBox {
+    private final ImageView selectedCharacterImageView;
+    public  String chosenCharacter;
 
     public Button createButton(String name, String file){
         Image prisoner = new Image(getClass().getResource(file).toExternalForm());
@@ -25,42 +22,28 @@ public class CustomizationPage {
         prisonerButton.setOnAction(event -> {
             selectedCharacterImageView.setImage(prisoner);
             System.out.println("Selected character = " + name);
+            chosenCharacter = name;
         });
         return prisonerButton;
     }
 
     public CustomizationPage(){
-        // Create a hbox to hold the character selection options buttons
         Button buffButton = createButton("Buff", "Buff.png");
         Button dancerButton = createButton("Dancer", "Dancer.png");
         Button jokerButton = createButton("Joker", "Joker.png");
         HBox characterSelectionHBox = new HBox(20, buffButton, dancerButton, jokerButton);
         characterSelectionHBox.setAlignment(Pos.CENTER);
 
-        // Create an hbox to hold the selected character image
         selectedCharacterImageView = new ImageView();
         selectedCharacterImageView.setFitWidth(200);
         selectedCharacterImageView.setFitHeight(200);
-        selectedCharacterHBox = new HBox(selectedCharacterImageView);
+        HBox selectedCharacterHBox = new HBox(selectedCharacterImageView);
         selectedCharacterHBox.setAlignment(Pos.CENTER);
 
-        // Create a vbox to hold the character selection and selected character image nodes
-        VBox vbox = new VBox(20, characterSelectionHBox, selectedCharacterHBox);
-        vbox.setAlignment(Pos.CENTER);
-
-        // Create a "Select" button
-        Button selectButton = new Button("Select");
-        selectButton.setOnAction(event -> {
-            System.out.println("Selected character: " + selectedCharacterImageView.getImage());
-        });
-
-        characterOptionsContainer = new VBox(vbox, selectButton);
-        characterOptionsContainer.setAlignment(Pos.CENTER);
-        characterOptionsContainer.setSpacing(20);
+        this.getChildren().addAll(characterSelectionHBox, selectedCharacterHBox);
+        this.setAlignment(Pos.CENTER);
+        Image yardbg =  new Image(getClass().getResource("Yard.jpeg").toExternalForm());
+        BackgroundImage yard = new BackgroundImage(yardbg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true));
+        this.setBackground(new Background(yard));
     }
-
-
-    public HBox renderSelectedCharacter() {return selectedCharacterHBox;}
-    public VBox renderOption(){return characterOptionsContainer;}
-
 }
