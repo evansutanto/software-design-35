@@ -1,16 +1,35 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
-group 'org.example'
+group 'com.example'
 version '1.0-SNAPSHOT'
-
-sourceCompatibility = 11
 
 repositories {
     mavenCentral()
 }
 
+sourceCompatibility = '11'
+
+javafx {
+    version = '18.0.1'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
 dependencies {
-    testImplementation group: 'junit', name: 'junit', version: '4.13.1'
+    implementation('org.controlsfx:controlsfx:11.1.1')
+    implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+}
+
+mainClassName = 'softwaredesign.Launcher'
+
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources"]
+        }
+    }
 }
